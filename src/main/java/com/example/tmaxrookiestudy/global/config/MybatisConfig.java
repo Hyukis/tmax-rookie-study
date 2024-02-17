@@ -1,6 +1,7 @@
 package com.example.tmaxrookiestudy.global.config;
 
 import com.example.tmaxrookiestudy.employee.domain.typeHandler.DepartmentHandler;
+import com.example.tmaxrookiestudy.employee.domain.typeHandler.WorkStatusHandler;
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.TypeHandler;
@@ -34,7 +35,10 @@ public class MybatisConfig {
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(dataSource);
     // xml 파일에 쿼리문을 매핑할 때 사용한다.
-    // sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(mapperPath));
+    sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(mapperPath));
+
+    // Enum Class Type Handler
+    sqlSessionFactoryBean.addTypeHandlers(new TypeHandler[] { new DepartmentHandler(), new WorkStatusHandler()});
     return sqlSessionFactoryBean.getObject();
   }
 
